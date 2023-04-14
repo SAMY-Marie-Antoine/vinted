@@ -24,10 +24,14 @@ const offerRoutes = require("./routes/offer");
 app.use(authentificationRoutes);
 app.use(offerRoutes);
 
+app.get("/", (req, res) => {
+  res.status(201).json({ message: "Bienvenue sur le site de vinted !!" });
+});
+
 app.all("*", (req, res) => {
   res.status(404).json({ message: "This route does not available !!" });
 });
 
 app.listen(3000, () => {
-  console.log("Server started !");
+  console.log("Server started 🚀🚀🚀!");
 });
