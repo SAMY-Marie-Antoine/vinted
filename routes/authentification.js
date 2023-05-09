@@ -76,7 +76,7 @@ router.post("/user/login", async (req, res) => {
       return res.status(401).json({ message: "vérifier email !" });
     }
 
-    const hash = decryptFunction(user[0].salt, password);
+    const hash = decryptFunction(user.salt, password);
 
     if (user.email !== email) {
       return res.status(500).json({ message: "Unauthorized !" });
