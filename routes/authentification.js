@@ -75,8 +75,8 @@ router.post("/user/login", async (req, res) => {
     const { email, password } = req.body;
 
     //Je regarde si user est dans la base
-    const user = await Authentification.find({ email: req.body.email });
-    //console.log(user);
+    const user = await Authentification.find({ email: email });
+    console.log(user);
     if (!user[0]) {
       return res.status(500).json({ message: "vérifier email !" });
     }
