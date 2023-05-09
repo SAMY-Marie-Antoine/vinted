@@ -90,7 +90,7 @@ router.post("/user/login", async (req, res) => {
     if (hash !== user[0].hash) {
       return res.status(500).json({ message: "Unauthorized!!" });
     } else {
-      res.status(201).json({
+      res.json({
         _id: user._id,
         account: user.account,
         token: user.token,
