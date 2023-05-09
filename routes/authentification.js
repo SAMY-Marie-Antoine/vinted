@@ -42,7 +42,7 @@ router.post("/user/signup", async (req, res) => {
     if (!username) {
       return res.status(500).json({ message: "username vide !!!" });
     }
-    if (user !== null) {
+    if (user) {
       return res
         .status(500)
         .json({ message: "email exite déjà dans la base !!!" });
@@ -84,15 +84,20 @@ router.post("/user/login", async (req, res) => {
     const hash = decryptFunction(user[0].salt, password);
 
     if (user[0].email !== email) {
-      return res.status(500).json({ message: "email inexistant !" });
+      return res.status(500).json({ message: "Unauthorized !" });
     }
 
     if (hash !== user[0].hash) {
-      return res.status(500).json({ message: "invalid password!!" });
+      return res.status(500).json({ message: "Unauthorized!!" });
     } else {
       res
         .status(201)
-        .json({ message: `${user[0].email} is successfull connected` });
+        .json({
+          message: `${user[0].email} is successfull connected`,
+          _id: user._id,
+          account: user.account,
+          token: user.token,
+        });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
