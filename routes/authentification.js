@@ -17,15 +17,10 @@ const convertToBase64 = (file) => {
 
 router.post("/upload", isAuthenticated, fileUpload(), async (req, res) => {
   try {
-    //console.log("je suis de retour apres isAuth\n");
-    //console.log(req.body, "\n");
-    //console.log(req.files);
-    //console.log(req.user, "\n");
-
     const pictureToUpload = req.files.picture;
     const result = await cloudinary.uploader.upload(
-      convertToBase64(pictureToUpload)
-      //{ folder: "/vinted/offers/" }
+      convertToBase64(pictureToUpload),
+      { folder: "/vinted/offers/" }
     );
     console.log(result);
   } catch (error) {
@@ -77,18 +72,18 @@ router.post("/user/login", async (req, res) => {
     //Je regarde si user est dans la base
     const user = await Authentification.find({ email: email });
     console.log(user);
-    if (!user[0]) {
-      return res.status(500).json({ message: "vérifier email !" });
+    if (user === null) {
+      return res.status(401).json({ message: "vérifier email !" });
     }
 
     const hash = decryptFunction(user[0].salt, password);
 
-    if (user[0].email !== email) {
+    if (user.email !== email) {
       return res.status(500).json({ message: "Unauthorized !" });
     }
 
-    if (hash !== user[0].hash) {
-      return res.status(500).json({ message: "Unauthorized!!" });
+    if (hash !== user.hash) {
+      return res.status(401).json({ message: "Unauthorized!!" });
     } else {
       res.status(201).json({
         message: `${user[0].email} is successfull connected`,
