@@ -70,7 +70,7 @@ router.post("/user/login", async (req, res) => {
     const { email, password } = req.body;
 
     //Je regarde si user est dans la base
-    const user = await Authentification.find({ email: email });
+    const user = await Authentification.findOne({ email: email });
     console.log(user);
     if (user === null) {
       return res.status(401).json({ message: "vérifier email !" });
@@ -84,14 +84,12 @@ router.post("/user/login", async (req, res) => {
 
     if (hash !== user.hash) {
       return res.status(401).json({ message: "Unauthorized!!" });
-    } else {
-      res.status(201).json({
-        message: `${user[0].email} is successfull connected`,
-        _id: user._id,
-        account: user.account,
-        token: user.token,
-      });
     }
+    res.json({
+      _id: user._id,
+      account: user.account,
+      token: user.token,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
