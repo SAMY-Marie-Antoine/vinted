@@ -217,6 +217,7 @@ router.get("/offer/:id", async (req, res) => {
     try {
       // Je reçoit le token stripe depuis le front
       const stripeToken = req.body.stripeToken;
+      console.log(stripeToken);
       // Je fais une requête à stripe pour créer un paiement
       const responseFromStripe = await stripe.charges.create({
         amount: 2000,
