@@ -213,11 +213,12 @@ router.get("/offer/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 
-  app.post("/payment", async (req, res) => {
+  router.post("/payment", async (req, res) => {
+    console.log("body =>", req.body.stripeToken);
     try {
       // Je reçoit le token stripe depuis le front
       const stripeToken = req.body.stripeToken;
-      console.log(stripeToken);
+
       // Je fais une requête à stripe pour créer un paiement
       const responseFromStripe = await stripe.charges.create({
         amount: 2000,
