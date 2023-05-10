@@ -10,7 +10,7 @@ const cloudinary = require("cloudinary").v2;
 
 const fileUpload = require("express-fileupload");
 const Offer = require("../models/Offer");
-
+require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE);
 
 const convertToBase64 = (file) => {
