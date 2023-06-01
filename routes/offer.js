@@ -168,7 +168,7 @@ router.get("/offers", async (req, res) => {
       sortFilter.product_price = 1;
     }
 
-    const limit = 3;
+    const limit = 10;
 
     // 5 résultats par page : 1 skip=0  2 skip=5 3 skip=10
     // 3 résultats par page : 1 skip=0  2 skip=3 3 skip=6 4 : skip=9
